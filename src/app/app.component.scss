@@ -10,15 +10,19 @@
 
   .new-user {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
     background-color: #ffffff;
     border-radius: 5px;
     margin-bottom: 15px;
     padding: 15px;
-    input {
-      flex: 1;
-      margin: 0 10px;
+    > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      input {
+        flex: 1;
+        margin-right: 10px;
+      }
     }
   }
 
@@ -88,6 +92,7 @@
           background-color: #a9dab1;
           padding: 10px;
           margin-bottom: 10px;
+          align-self: flex-start;
         }
         .msj-rigth {
           align-self: flex-end;
@@ -104,6 +109,14 @@
           margin-right: 10px;
         }
       }
+    }
+    .chat-empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      font-size: 20px;
+      color: grey;
     }
   }
 

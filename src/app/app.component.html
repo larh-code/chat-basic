@@ -2,35 +2,48 @@
 
 <div class="new-user">
   <span>Escriba su nombre para unirse al chat</span>
-  <input class="form-control" type="text" name="user" id="user" placeholder="Escriba su nombre">
-  <button class="btn primary">Unirme</button>
+  <div>
+    <input class="form-control" type="text" name="user" [(ngModel)]="userNew" [disabled]="user" id="user" placeholder="Escriba su nombre">
+    <button class="btn primary" (click)="addNewUser()" [disabled]="user">Unirme</button>
+  </div>
 </div>
 
 <div class="chat">
   <div class="user-con">
     <ul>
-      <li>Luis</li>
-      <li>Jose</li>
-      <li>Carmen</li>
-      <li>Maria</li>
+      <ng-container *ngFor="let name of users">
+        <li *ngIf="isSame(name)"
+          (click)="selectChat(name)">{{name}}</li>
+      </ng-container>
     </ul>
   </div>
   <div class="chat-user">
-    <div class="header">
-      <div class="user-icon"><i class="fa fa-user"></i></div>
-      <span class="user-name">Felipe</span>
-    </div>
-    <div class="body">
-      <div class="msj-left">
-        <span class="msj">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, nesciunt inventore asperiores praesentium laborum maiores ea perferendis odit et, id officia? Laborum, ipsa aut dignissimos quas alias voluptate molestias reiciendis.</span>
+    <ng-container *ngIf="currencyRoom">
+      <div class="header">
+        <div class="user-icon"><i class="fa fa-user"></i></div>
+        <span class="user-name">{{currencyRoom.userRoom}}</span>
       </div>
-      <div class="msj-rigth">
-        <span class="msj">Lorem ipsum dolor sit amet </span>
+      <div class="body">
+        <ng-container *ngFor="let msj of messages">
+          <div class="msj-left" [ngClass]="{'msj-left': msj.user !== user, 'msj-rigth': msj.user === user}">
+            <span class="msj">{{msj.message}}</span>
+          </div>
+        </ng-container>
       </div>
-    </div>
-    <div class="footer">
-      <textarea name="msj" id="msj" class="form-control mensajeSend" placeholder="Escribir mensaje..."></textarea>
-      <button class="btn circle success" title="Enviar" [disabled]="true"><i class="fa fa-send"></i></button>
+      <div class="footer">
+        <textarea
+          [(ngModel)]="msj"
+          class="form-control mensajeSend"
+          placeholder="Escribir mensaje..."></textarea>
+        <button
+          class="btn circle success"
+          title="Enviar"
+          [disabled]="!msj.length"
+          (click)="sendMessage()"><i class="fa fa-send"></i></button>
+      </div>
+    </ng-container>
+    <div class="chat-empty" *ngIf="!currencyRoom">
+      <span>Debe seleccionar un contacto</span>
     </div>
   </div>
 </div>
